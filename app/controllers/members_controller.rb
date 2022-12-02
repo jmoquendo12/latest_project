@@ -25,7 +25,7 @@ class MembersController < ApplicationController
 
   def update
     @member = User.find(current_user.id)
-    if @member.update(set_member)
+    if @member.update(member_params)
       redirect_to members_path
     else
       render :edit
@@ -36,11 +36,10 @@ class MembersController < ApplicationController
     @profile = User.find(current_user.id)
   end
 
-  # mount_uploader :image, ImageUploader
 
   def show; end
 
-  def set_member
+  def member_params
     params.require(:user).permit(:username, :image, :phone)
   end
 
