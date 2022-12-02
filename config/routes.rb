@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   #
 
+  namespace :api do
+    resources :regions, only: :index, defaults: { format: :json }
+  end
   constraints(AdminDomainConstraint.new) do
     namespace :admin, path: '' do
       devise_for :users, controller: {
