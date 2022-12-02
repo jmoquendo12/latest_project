@@ -4,7 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :trackable
 
-  has_many :members
-
   enum role: { client: 0, admin: 1}
+
+  mount_uploader :image, ImageUploader
+
 end
