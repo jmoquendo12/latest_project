@@ -11,9 +11,10 @@ class MembersController < ApplicationController
   end
 
   def create
-    @member = Member.new(find_member)
+    @member = Member.new
     if @member.save
-      redirect_to members_path
+      flash[:notice] = "This info was saved."
+      redirect_to edit_members_path
     else
       render :new
     end
@@ -24,7 +25,6 @@ class MembersController < ApplicationController
   def edit_profile; end
 
   def update
-    @member = User.find(current_user.id)
     if @member.update(member_params)
       redirect_to members_path
     else
@@ -33,9 +33,8 @@ class MembersController < ApplicationController
   end
 
   def update_profile
-    @profile = User.find(current_user.id)
+    @member = User.find(current_user.id)
   end
-
 
   def show; end
 
