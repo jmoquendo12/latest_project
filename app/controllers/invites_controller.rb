@@ -21,4 +21,5 @@ class InvitesController < ApplicationController
       use_path: true
     )
   end
+  
 end
