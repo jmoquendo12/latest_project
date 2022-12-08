@@ -10,12 +10,62 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_02_033304) do
+ActiveRecord::Schema[7.0].define(version: 2022_12_07_051728) do
+  create_table "address_barangays", charset: "utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.string "code"
+    t.bigint "city_municipality_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["city_municipality_id"], name: "index_address_barangays_on_city_municipality_id"
+  end
+
+  create_table "address_city_municipalities", charset: "utf8mb4", force: :cascade do |t|
+    t.string "code"
+    t.string "name"
+    t.bigint "province_id"
+    t.bigint "district_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["district_id"], name: "index_address_city_municipalities_on_district_id"
+    t.index ["province_id"], name: "index_address_city_municipalities_on_province_id"
+  end
+
+  create_table "address_provinces", charset: "utf8mb4", force: :cascade do |t|
+    t.string "code"
+    t.string "name"
+    t.bigint "region_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["region_id"], name: "index_address_provinces_on_region_id"
+  end
+
   create_table "address_regions", charset: "utf8mb4", force: :cascade do |t|
     t.string "code"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "addresses", charset: "utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.string "street_address"
+    t.string "phone_number"
+    t.boolean "is_default"
+    t.string "remark"
+    t.bigint "user_id"
+    t.bigint "address_region_id"
+    t.bigint "address_province_id"
+    t.bigint "address_city_municipality_id"
+    t.bigint "address_barangay_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "genre"
+    t.index ["address_barangay_id"], name: "index_addresses_on_address_barangay_id"
+    t.index ["address_city_municipality_id"], name: "index_addresses_on_address_city_municipality_id"
+    t.index ["address_province_id"], name: "index_addresses_on_address_province_id"
+    t.index ["address_region_id"], name: "index_addresses_on_address_region_id"
+    t.index ["user_id"], name: "index_addresses_on_user_id"
   end
 
   create_table "admins", charset: "utf8mb4", force: :cascade do |t|
@@ -33,19 +83,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_02_033304) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
-  end
-
-  create_table "admins_users", charset: "utf8mb4", force: :cascade do |t|
-    t.string "roles"
-    t.bigint "users_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["users_id"], name: "index_admins_users_on_users_id"
-  end
-
-  create_table "clients_users", charset: "utf8mb4", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "members", charset: "utf8mb4", force: :cascade do |t|
@@ -74,7 +111,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_02_033304) do
     t.string "image"
     t.string "phone"
     t.string "address"
+    t.bigint "parent_id"
+    t.integer "children_member"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["parent_id"], name: "index_users_on_parent_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
