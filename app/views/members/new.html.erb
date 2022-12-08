@@ -1,0 +1,53 @@
+<% if @member.errors.any? %>
+  <ul>
+    <% @member.errors.each do |error| %>
+      <li><%= error.full_message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_with model: @member, url: edit_members_path, data: { controller: :location } do |form| %>
+  <div class="container-sm">
+    <div>
+      <%= form.label :username %>
+      <%= form.text_field :username %>
+    </div>
+
+    <div>
+      <%= form.label :phone %>
+      <%= form.text_field :phone %>
+    </div>
+
+    <div>
+      <%= form.label :address %>
+      <%= form.text_field :address %>
+    </div>
+    <div>
+      <%= form.label :address_region_id %>
+      <%= form.collection_select :address_region_id,
+                                 Address::Region.all, :id, :name,
+                                 { prompt: 'PLEASE SELECT REGION' },
+                                 data: { location_target: 'selectedRegionId', action: 'change->location#fetchProvinces' } %>
+    </div>
+
+    <div>
+      <%= form.label :province_id %>
+      <%= form.collection_select :address_province_id, [], nil, nil, { prompt: 'PLEASE SELECT PROVINCE' }, data: { location_target: 'selectProvinceId', action: 'change->location#fetchCityMunicipalities' } %>
+    </div>
+
+    <div>
+      <%= form.label :address_city_municipality_id %>
+      <%= form.collection_select :city_municipality_id, [], nil, nil, { prompt: 'PLEASE SELECT MUNICIPALITY' }, data: { location_target: 'selectCityMunicipalityId', action: 'change->location#fetchBarangays' } %>
+    </div>
+
+    <div>
+      <%= form.label :address_barangay_id %>
+      <%= form.collection_select :address_barangay_id, [], nil, nil, { prompt: 'PLEASE SELECT BARANGAY' }, data: { location_target: 'selectBarangayId' } %>
+    </div>
+
+    <div>
+
+    </div>
+    <%= form.submit "Save", class: "btn btn-primary"%>
+<% end %>
+</div>

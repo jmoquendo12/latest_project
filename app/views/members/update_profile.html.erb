@@ -1,0 +1,46 @@
+
+<div class="container-sm" style="border: 1px solid; padding:  10px">
+  <div style="text-align: center">
+  <%= image_tag current_user.image.url, style: "border-radius: 50%; width: 15%" if current_user.image.present? %>
+  </div>
+  <%= form_with model: @member, url: members_path, method: :put, data: { turbo: false } do |form| %>
+    <div class="field">
+      <%= form.label :image %>
+      <%= form.file_field :image %>
+    </div>
+
+    <div class="field">
+      <%= form.label :username %>
+      <%= form.text_field :username %>
+    </div>
+
+    <div class="field">
+      <%= form.label :phone %>
+      <%= form.text_field :phone %>
+    </div>
+
+<!--    <div class="field">-->
+<!--      <%#= form.label :current_password %> <i>(we need your current password to confirm your changes)</i><br/>-->
+      <%#= form.password_field :current_password, autocomplete: "current-password"  %>
+<!--    </div>-->
+
+<!--    <div class="field">-->
+<!--      <%#= form.label :password %> <i>(leave blank if you don't want to change it)</i><br/>-->
+      <%#= form.password_field :password, autocomplete: "new-password" %>
+      <%# if @minimum_password_length %>
+<!--        <br/>-->
+<!--        <em><%#= @minimum_password_length %> characters minimum</em>-->
+      <%# end %>
+<!--    </div>-->
+
+<!--    <div class="field">-->
+<!--      <%#= form.label :password_confirmation %><br/>-->
+      <%#= form.password_field :password_confirmation, autocomplete: "new-password" %>
+<!--    </div>-->
+
+    <%= form.submit "Update" %>
+  <% end %>
+</div>
+
+
+

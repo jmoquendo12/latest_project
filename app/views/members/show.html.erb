@@ -1,0 +1,58 @@
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Logo</a>
+          </li>
+
+        </ul>
+        <form class="d-flex">
+          <ul class="navbar-nav me-auto mb-2 mb-md-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#" style="color: #ffffff">Language</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#" style="color: #ffffff">Claim</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="#" style="color: #ffffff">Coins</a>
+            </li>
+          </ul>
+
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="true">
+            Menu
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><%= link_to 'Profile', update_profile_members_path, class: '' %></li>
+              <li> <%= link_to "Sign out", "#" %></li>
+            </ul>
+          </button>
+        </form>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="container-sm" style="border: 1px solid">
+  <%#= form_with model: @member do |f| %>
+  <div style="text-align: center">
+    <%= image_tag current_user.image.url, style: "border-radius: 50%; width: 15%" if current_user.image.present? %>
+  </div>
+  <div><%= label_tag :username %>: <%= current_user.username %></div>
+  <div><%= label_tag :email %>: <%= current_user.email %></div>
+  <div><%= label_tag :coins %>:</div>
+
+  <%= link_to 'Cash In', '#', class: 'btn btn-primary btn-block mb-4', style: 'width: 100%' %>
+  <%# end %>
+<%#= form_with model: @member do |form| %>
+  <div><%= label_tag :contact %>Us: <%= current_user.phone %></div>
+  <div><%= label_tag :my %>Profile:</div>
+  <div><%= label_tag :sign %>out:</div>
+  <%# end %>
+</div>
