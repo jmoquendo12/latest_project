@@ -1,29 +1,38 @@
-<h2>Sign up</h2>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), data: { turbo: false }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "users/shared/error_messages", resource: resource %>
+  <div class="container-sm">
+    <ul class="nav nav-pills nav-justified">
+      <li class="nav-item">
+        <%= link_to "Log in", new_session_path(resource_name), class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Register", new_user_registration_path, class: " bg-warning nav-link active" %>
+      </li>
+    </ul>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+    <h2 style="text-align: center">Client Sign up</h2>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
+    <div class="form-outline mb-4">
+      <%= f.text_field :parent, class: "form-control", placeholder: "Promoter Name", autofocus: true, autocomplete: "email", value: cookies[:promoter] %>
+    </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+    <div class="form-outline mb-4">
+      <%= f.email_field :email, class: "form-control", placeholder: "Email", autofocus: true, autocomplete: "email" %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
+    <div class="form-outline mb-4">
+      <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+      <% end %><br/>
+      <%= f.password_field :password, class: "form-control", placeholder: "Password", autocomplete: "new-password" %>
+    </div>
+
+    <div class="form-outline mb-4">
+      <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Confirm Password", autocomplete: "new-password" %>
+    </div>
+
+    <%= f.submit "Sign up", class: "btn btn-primary btn-block mb-3" %>
 <% end %>
-
-<%= render "users/shared/links" %>
+<%= render "devise/shared/links" %>
+</div>

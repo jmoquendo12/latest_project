@@ -1,26 +1,30 @@
-<h2>Log in</h2>
+<div class="container-sm">
+  <ul class="nav nav-pills nav-justified">
+    <li class="nav-item">
+      <ul class="nav nav-pills nav-justified">
+        <li class="nav-item">
+          <%= link_to "Log in", new_session_path(resource_name), class: "nav-link active" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Register", new_user_registration_path, class: "nav-link" %>
+        </li>
+      </ul>
+      <h2>Client Log in</h2>
+      <%= form_for(resource, as: resource_name, url: user_session_path, data: { turbo: false }) do |f| %>
+        <div class="field">
+          <%= f.label :email, class: "form-label" %><br/>
+          <%= f.email_field :email, class: "form-control", autofocus: true, autocomplete: "email" %>
+        </div>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+        <div class="field">
+          <%= f.label :password, class: "form-label" %><br/>
+          <%= f.password_field :password, class: "form-control", autocomplete: "current-password" %>
+        </div>
+        <div class="actions">
+          <%= f.submit "Log in", class: "btn btn-primary btn-block mb-3" %>
+        </div>
+      <% end %>
+      <%= render "devise/shared/links", class: "btn btn-primary btn-block mb-3" %>
+    </li>
+  </ul>
+</div>
