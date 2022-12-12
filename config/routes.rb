@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       end
     end
   end
+
   constraints(AdminDomainConstraint.new) do
     namespace :admin, path: '' do
       devise_for :users, controllers: {
@@ -20,6 +21,7 @@ Rails.application.routes.draw do
       }
       root to: "home#index"
       resources :users
+      resources :items
     end
   end
 
@@ -27,7 +29,7 @@ Rails.application.routes.draw do
     devise_for :users, controllers: {
       sessions: 'users/sessions', registrations: 'users/registrations'
     }
-    root "members#index"
+    root to: "members#index"
     resource :members, path: '' do
       get "update_profile"
     end
