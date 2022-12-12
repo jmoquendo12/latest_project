@@ -8,5 +8,5 @@ class User < ApplicationRecord
   belongs_to :parent, class_name: 'user', optional: true
   has_many :addresses
   mount_uploader :image, ImageUploader
-
+  has_many :admins_items
 end
