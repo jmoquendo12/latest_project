@@ -1,0 +1,21 @@
+<h1>Hello</h1>
+<%= form_with model: @item, url: admin_item_path, method: :patch, data: { turbo: false } do |list| %>
+<div><%= list.label :image %>
+  <%= list.file_field :image %></div>
+<div>
+  <%= list.label :name %>
+  <%= list.text_field :name %>
+</div>
+
+<div>
+  <%= list.label :quantity %>
+  <%= list.text_field :quantity %>
+</div>
+
+<div>
+  <%= list.label :minimum_bets %>
+  <%= list.text_field :minimum_bets %>
+</div>
+
+  <%= list.submit "Update" %>
+<% end %>
