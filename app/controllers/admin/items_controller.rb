@@ -1,7 +1,7 @@
 class Admin::ItemsController < ApplicationController
   before_action :authenticate_admin_user!
   # before_action :item_params, except: [:index, :new, :create]
-  before_action :find_item, only: [:edit, :update, :destroy]
+  before_action :set_item, only: [:edit, :update, :destroy, :start, :pause, :end, :cancel]
 
   def index
     @items = Item.all
@@ -13,11 +13,10 @@ class Admin::ItemsController < ApplicationController
 
   def create
     @item = Item.new(item_params)
-    if @item.save
-      flash[:notice] = "Saved"
+    if @item.pending
       redirect_to admin_items_path
     else
-      render :new
+      @item.start
     end
   end
 
@@ -37,14 +36,36 @@ class Admin::ItemsController < ApplicationController
     redirect_to admin_items_path
   end
 
-  #
+  def start
+    @items.start!
+    redirect_to admin_items_path
+
+  end
+
+  def pause
+    @items.pause!
+    redirect_to admin_items_path
+
+  end
+
+  def end
+    @items.end!
+    redirect_to admin_items_path
+  end
+
+  def cancel
+    @items.cancel!
+    redirect_to admin_items_path
+  end
+
+  private
+
   def item_params
     params.require(:item).permit(:image, :name, :quantity, :minimum_bets, :status, :start_at, :online_at, :offline_at, :state, :batch_count)
   end
 
-  def find_item
-    @item = Item.find(params[:id])
+  def set_item
+    @items = Item.find(params[:id] || params[:item_id])
   end
 
-  
 end

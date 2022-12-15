@@ -6,7 +6,7 @@
 <!--  </ul>-->
 <%# end %>
 
-<%= form_with model: @address, url: addresses_path , data: { controller: :location } do |form| %>
+<%= form_with model: @address, url: addresses_path , data: { controllers: :location } do |form| %>
   <div class="container-sm">
     <div>
       <%= form.label :name %>

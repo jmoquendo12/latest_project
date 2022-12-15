@@ -1,9 +1,9 @@
 class Item < ApplicationRecord
-  # validates :image, presence: true
-  # validates :name, presence: true
-  # validates :quantity, presence: true
-  # validates :minimum_bets, presence: true
+
+  has_many :categories
   include AASM
+
+  enum status: { active: "1", inactive: "0" }
 
   default_scope { where(deleted_at: nil) }
 
@@ -13,27 +13,38 @@ class Item < ApplicationRecord
 
   mount_uploader :image, ImageUploader
 
-
   aasm column: :state do
     state :pending, initial: true
-    state :submitted, :paid, :failed, :revoked
+    state :starting, :cancelled, :ended, :paused
 
-    event :submit do
-      transitions from: :pending, to: :submitted
+    event :start do
+      transitions from: [:pending, :cancelled, :ended, :paused], to: :starting
     end
 
-    event :pay do
-      transitions from: :submitted, to: :paid
+    event :pause do
+      transitions from: [:starting, :cancelled], to: :paused
     end
 
-    event :fail do
-      transitions from: [:pending, :submitted], to: :failed
+    event :end do
+      transitions from: :starting, to: :ended
     end
 
-    event :revoke do
-      transitions from: [:pending, :submitted], to: :revoked
+    event :cancel do
+      transitions from: :starting, to: :cancelled
     end
   end
+
+  # def state=(value)
+  #   if self.class.method_defined?(value)
+  #     if self.send("may_#{value}?")
+  #       self.send(value)
+  #     else
+  #       errors.add(:status, "status cannot transition from #{status} to #{value}")
+  #     end
+  #   else
+  #     errors.add(:status, "status of #{value} is not valid.  Legal values are #{aasm.states.map(&:name).join(", ")}")
+  #   end
+  # end
 
   #
   # after_create :assign_serial_number
