@@ -32,6 +32,9 @@
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+/public/uploads/user
+/public/uploads/item
+/public/uploads/tmp
 
 /node_modules
 
