@@ -1,5 +1,5 @@
 <h1>Hello</h1>
-<%= form_with model: @item, url: admin_item_path, method: :patch, data: { turbo: false } do |list| %>
+<%= form_with model: @items, url: admin_item_path, method: :patch, data: { turbo: false } do |list| %>
   <div><%= list.label :image %>
     <%= list.file_field :image %></div>
   <div>
@@ -19,7 +19,7 @@
 
   <div>
     <%= list.label :status %>
-    <%= list.text_field :status %>
+    <%= list.select :status, Item.statuses.keys.map { |k| [k.humanize, k] }, { prompt: "Choose Status"} %>
   </div>
 
   <%= list.submit "Update" %>
