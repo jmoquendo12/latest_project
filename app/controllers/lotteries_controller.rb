@@ -1,5 +1,8 @@
 class LotteriesController < ApplicationController
   def index
-    @items = Item.includes(:categories).where
+    # @items = Item.all
+    @items = Item.active.starting
+    @categories = Category.all
   end
+
 end
