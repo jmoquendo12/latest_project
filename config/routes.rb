@@ -21,13 +21,14 @@ Rails.application.routes.draw do
       }
       root to: "home#index"
       resources :users
-      resources :items do
+      resources :items, except: :show do
         put :start
         put :pause
         put :end
         put :cancel
       end
-      resources :categories
+      resources :categories, except: :show
+      resources :bets
     end
   end
 
